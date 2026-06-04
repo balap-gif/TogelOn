@@ -35,111 +35,135 @@
         .header h1 { font-family: 'Orbitron', sans-serif; font-size: 42px; font-weight: 900; color: var(--primary); margin: 15px 0 10px; text-shadow: 0 0 20px var(--primary); letter-spacing: 3px; transition: all 0.5s; }
         .header p { font-size: 16px; color: #ffffff; letter-spacing: 1px; }
 
+        /* ====== PANEL SELECTOR — NEW DESIGN ====== */
         .site-selector {
-            background: linear-gradient(135deg, rgba(0,6,13,0.7), rgba(0,10,20,0.9));
+            background: linear-gradient(135deg, rgba(0,6,13,0.85), rgba(0,10,20,0.92));
             border: 2px solid var(--primary);
-            border-radius: 15px;
-            padding: 25px;
+            border-radius: 18px;
+            padding: 22px 18px 18px;
             margin-bottom: 25px;
             box-shadow: 0 0 25px var(--glow-soft);
             transition: all 0.5s ease;
         }
-        .site-selector h3 {
+        .site-selector-title {
             font-family: 'Orbitron', sans-serif;
             color: var(--primary);
-            font-size: 18px;
-            margin-bottom: 20px;
+            font-size: 15px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 10px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             font-weight: 900;
             transition: color 0.5s;
         }
-        .site-cards {
+        .site-selector-title svg { flex-shrink: 0; }
+        .site-cards-row {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
         }
-        .site-card {
+        .site-card-new {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            padding: 20px;
-            border-radius: 15px;
-            border: 3px solid rgba(255,255,255,0.08);
+            justify-content: center;
+            padding: 18px 10px 14px;
+            border-radius: 16px;
+            border: 2px solid rgba(255,255,255,0.06);
             cursor: pointer;
-            transition: all 0.4s ease;
-            background: rgba(0,4,10,0.8);
+            transition: all 0.35s ease;
+            background: rgba(0,4,10,0.75);
             position: relative;
             overflow: hidden;
             user-select: none;
+            text-align: center;
         }
-        .site-card::before {
+        .site-card-new::after {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 5px; height: 100%;
+            bottom: 0; left: 0;
+            width: 100%; height: 4px;
             transition: all 0.4s;
+            opacity: 0;
         }
-        .site-card[data-site="togelon"]::before { background: #00E5FF; }
-        .site-card[data-site="danatoto"]::before { background: #A855F7; }
-        .site-card[data-site="fatcai"]::before { background: #FFD700; }
-        .site-card.active {
+        .site-card-new[data-site="togelon"]::after   { background: #00E5FF; }
+        .site-card-new[data-site="danatoto"]::after   { background: #A855F7; }
+        .site-card-new[data-site="fatcai"]::after     { background: #FFD700; }
+        .site-card-new[data-site="wdmahjong"]::after  { background: #00FF88; }
+
+        .site-card-new.active {
             border-color: var(--primary);
-            box-shadow: 0 0 30px var(--glow-alpha);
+            box-shadow: 0 0 35px var(--glow-alpha), inset 0 0 30px rgba(0,0,0,0.3);
             background: rgba(0,4,10,0.95);
         }
-        .site-card.active::before { width: 7px; }
-        .site-card:not(.active):hover {
-            border-color: rgba(255,255,255,0.25);
-            transform: translateY(-3px);
-            background: rgba(0,4,10,0.9);
+        .site-card-new.active::after { opacity: 1; height: 5px; }
+        .site-card-new:not(.active):hover {
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-4px);
+            background: rgba(0,4,10,0.88);
         }
-        .site-card-thumb {
-            width: 70px;
-            height: auto;
-            filter: drop-shadow(0 0 10px var(--primary));
+        .site-card-new:not(.active):hover::after { opacity: 0.5; height: 4px; }
+
+        .site-card-logo-wrap {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.08);
             transition: all 0.4s;
+            overflow: hidden;
             flex-shrink: 0;
         }
-        .site-card-info { flex: 1; min-width: 0; }
-        .site-card-name {
+        .site-card-new.active .site-card-logo-wrap {
+            border-color: var(--primary);
+            box-shadow: 0 0 20px var(--glow-alpha);
+        }
+        .site-card-logo-wrap img {
+            width: 60px;
+            height: auto;
+            max-height: 60px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 8px var(--primary));
+            transition: all 0.4s;
+        }
+        .site-card-new.active .site-card-logo-wrap img {
+            filter: drop-shadow(0 0 14px var(--primary));
+        }
+        .site-card-label {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(14px, 2vw, 20px);
+            font-size: clamp(10px, 1.4vw, 13px);
             font-weight: 900;
             letter-spacing: 2px;
             transition: color 0.4s;
             line-height: 1.2;
         }
-        .site-card.active .site-card-name { color: var(--primary); }
-        .site-card:not(.active) .site-card-name { color: rgba(255,255,255,0.5); }
-        .site-card-desc {
-            font-size: 12px;
-            color: rgba(255,255,255,0.45);
-            margin-top: 4px;
-            letter-spacing: 0.5px;
-        }
-        .site-card-badge {
-            position: absolute;
-            top: 10px; right: 10px;
-            padding: 3px 12px;
+        .site-card-new.active .site-card-label { color: var(--primary); }
+        .site-card-new:not(.active) .site-card-label { color: rgba(255,255,255,0.4); }
+
+        .site-card-status {
+            margin-top: 6px;
+            padding: 2px 12px;
             border-radius: 20px;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 700;
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 1.5px;
             text-transform: uppercase;
             transition: all 0.4s;
         }
-        .site-card.active .site-card-badge {
+        .site-card-new.active .site-card-status {
             background: var(--primary);
             color: #000;
         }
-        .site-card:not(.active) .site-card-badge {
-            background: rgba(255,255,255,0.08);
-            color: rgba(255,255,255,0.3);
+        .site-card-new:not(.active) .site-card-status {
+            background: rgba(255,255,255,0.06);
+            color: rgba(255,255,255,0.25);
         }
 
         .auto-date { background: linear-gradient(135deg, rgba(0,6,13,0.7), rgba(0,10,20,0.9)); border: 3px solid var(--primary); border-radius: 15px; padding: 20px; margin-bottom: 25px; text-align: center; box-shadow: 0 0 30px var(--glow-alpha); transition: all 0.5s; }
@@ -241,8 +265,20 @@
         .notification { position: fixed; top: 30px; right: 30px; background: linear-gradient(135deg, #00E5FF, #00B8D4); color: #000; padding: 18px 30px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,229,255,0.4); display: none; z-index: 10000; animation: slideIn 0.5s ease; font-weight: 700; font-size: 15px; transition: background 0.4s; }
         @keyframes slideIn { from{transform:translateX(400px);opacity:0} to{transform:translateX(0);opacity:1} }
 
-        @media(max-width:1200px){ .main-layout{grid-template-columns:1fr;} .preview-sticky{position:relative;top:0;} .color-grid{grid-template-columns:1fr;} .site-cards{grid-template-columns:1fr 1fr;} }
-        @media(max-width:768px){ .header img.logo{max-width:180px;} .header h1{font-size:28px;letter-spacing:1px;} .stats-bar{flex-direction:column;gap:10px;} button{font-size:12px;padding:12px 20px;} .site-cards{grid-template-columns:1fr;} .site-card{padding:15px;gap:10px;} .site-card-thumb{width:50px;} .site-card-name{font-size:14px;} }
+        @media(max-width:1200px){
+            .main-layout{grid-template-columns:1fr;} .preview-sticky{position:relative;top:0;} .color-grid{grid-template-columns:1fr;} 
+            .site-cards-row{grid-template-columns:repeat(2,1fr);}
+        }
+        @media(max-width:768px){ 
+            .header img.logo{max-width:180px;} .header h1{font-size:28px;letter-spacing:1px;} .stats-bar{flex-direction:column;gap:10px;} 
+            button{font-size:12px;padding:12px 20px;} 
+            .site-cards-row{grid-template-columns:repeat(2,1fr);gap:10px;}
+            .site-card-logo-wrap{width:60px;height:60px;} .site-card-logo-wrap img{width:44px;max-height:44px;}
+            .site-card-label{font-size:9px;} .site-card-new{padding:14px 8px 10px;}
+        }
+        @media(max-width:480px){
+            .site-cards-row{grid-template-columns:repeat(2,1fr);gap:8px;}
+        }
     </style>
 </head>
 <body>
@@ -254,32 +290,40 @@
         <p id="headerSub">Generator Bola Team TogelOn</p>
     </div>
 
+    <!-- ====== PANEL SELECTOR — NEW DESIGN ====== -->
     <div class="site-selector">
-        <h3>&#127920; PILIH PANEL</h3>
-        <div class="site-cards">
-            <div class="site-card active" data-site="togelon" onclick="switchSite('togelon')">
-                <img class="site-card-thumb" src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON">
-                <div class="site-card-info">
-                    <div class="site-card-name">TOGELON</div>
-                    <div class="site-card-desc">Generator Bola TogelOn</div>
+        <div class="site-selector-title">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+            PILIH PANEL
+        </div>
+        <div class="site-cards-row">
+            <div class="site-card-new active" data-site="togelon" onclick="switchSite('togelon')">
+                <div class="site-card-logo-wrap">
+                    <img src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON">
                 </div>
-                <span class="site-card-badge">AKTIF</span>
+                <div class="site-card-label">TOGELON</div>
+                <div class="site-card-status">AKTIF</div>
             </div>
-            <div class="site-card" data-site="danatoto" onclick="switchSite('danatoto')">
-                <img class="site-card-thumb" src="https://i.postimg.cc/VvxbMwrX/image.png" alt="DANA TOTO">
-                <div class="site-card-info">
-                    <div class="site-card-name">DANA TOTO</div>
-                    <div class="site-card-desc">Generator Bola Dana Toto</div>
+            <div class="site-card-new" data-site="danatoto" onclick="switchSite('danatoto')">
+                <div class="site-card-logo-wrap">
+                    <img src="https://i.postimg.cc/VvxbMwrX/image.png" alt="DANA TOTO">
                 </div>
-                <span class="site-card-badge">AKTIF</span>
+                <div class="site-card-label">DANA TOTO</div>
+                <div class="site-card-status">AKTIF</div>
             </div>
-            <div class="site-card" data-site="fatcai" onclick="switchSite('fatcai')">
-                <img class="site-card-thumb" src="https://i.postimg.cc/vTM0YFvn/image.png" alt="FATCAI">
-                <div class="site-card-info">
-                    <div class="site-card-name">FATCAI</div>
-                    <div class="site-card-desc">Generator Bola Fatcai</div>
+            <div class="site-card-new" data-site="fatcai" onclick="switchSite('fatcai')">
+                <div class="site-card-logo-wrap">
+                    <img src="https://i.postimg.cc/vTM0YFvn/image.png" alt="FATCAI">
                 </div>
-                <span class="site-card-badge">AKTIF</span>
+                <div class="site-card-label">FATCAI</div>
+                <div class="site-card-status">AKTIF</div>
+            </div>
+            <div class="site-card-new" data-site="wdmahjong" onclick="switchSite('wdmahjong')">
+                <div class="site-card-logo-wrap">
+                    <img src="https://i.postimg.cc/6pppdZ3k/image.png" alt="WDMAHJONG">
+                </div>
+                <div class="site-card-label">WD MAHJONG</div>
+                <div class="site-card-status">AKTIF</div>
             </div>
         </div>
     </div>
@@ -449,6 +493,16 @@ var SITES = {
         defaultColors: { bg: '#D4A017', txt: '#ffffff', hd: '#0A0500', mq: '#FFD700' },
         cssVars: { '--primary': '#FFD700', '--primary-light': '#FFE44D', '--primary-dark': '#D4A017', '--marquee-color': '#FFD700', '--glow-alpha': 'rgba(255,215,0,0.4)', '--glow-soft': 'rgba(255,215,0,0.2)' },
         outBg: { dk: '#0A0500', dm: '#120D05', dl: '#1A1508', ds: '#0F0A03' }
+    },
+    wdmahjong: {
+        name: 'WD MAHJONG', sub: 'Generator Bola WD Mahjong',
+        logo: 'https://i.postimg.cc/6pppdZ3k/image.png', favicon: 'https://wdmahjong.com/favicon.ico',
+        background: 'https://cdn.areabermain.club/assets/cdn/az1/2026/04/03/20260403/81279b2a019271e5491e9df94b0b0c28/wdmahjong-background-1.jpg',
+        bodyOverlay: 'rgba(0,10,5,0.92), rgba(0,18,10,0.92)', outputOverlay: 'rgba(0,10,5,0.95), rgba(0,18,10,0.95)',
+        marquee: '\u{1F525} PREDIKSI BOLA TERUPDATE ! Tunggu apa lagi? Daftar di WD MAHJONG dan nikmati pengalaman Casino Online terbaik dengan peluang besar! \u2660',
+        defaultColors: { bg: '#00CC66', txt: '#ffffff', hd: '#001a0d', mq: '#00FF88' },
+        cssVars: { '--primary': '#00FF88', '--primary-light': '#66FFAA', '--primary-dark': '#00CC66', '--marquee-color': '#00FF88', '--glow-alpha': 'rgba(0,255,136,0.4)', '--glow-soft': 'rgba(0,255,136,0.2)' },
+        outBg: { dk: '#001a0d', dm: '#002211', dl: '#003319', ds: '#001a0d' }
     }
 };
 
@@ -471,7 +525,7 @@ function switchSite(key) {
     var vars = site.cssVars; Object.keys(vars).forEach(function(k) { document.documentElement.style.setProperty(k, vars[k]); });
     setColorValues(site.defaultColors.bg, site.defaultColors.txt, site.defaultColors.hd, site.defaultColors.mq);
     updatePreviewColors();
-    document.querySelectorAll('.site-card').forEach(function(card) { card.classList.toggle('active', card.getAttribute('data-site') === key); });
+    document.querySelectorAll('.site-card-new').forEach(function(card) { card.classList.toggle('active', card.getAttribute('data-site') === key); });
     reRenderIfHasData();
     showNotification('\u2713 Panel diubah ke ' + site.name);
 }
@@ -555,7 +609,6 @@ function lookupCustomSheet(teamName) {
     return null;
 }
 
-/* --- TheSportsDB API Fetch --- */
 async function fetchLogoFromAPI(teamName) {
     var cleanName = cleanTeamNameForLogo(teamName);
     if (!cleanName) return null;
@@ -582,16 +635,10 @@ async function fetchTeamLogo(teamName) {
     var key = teamName.toLowerCase().trim();
     if (key in teamLogoCache) return teamLogoCache[key];
     if (!sheetLoaded) { try { await sheetLoadPromise; } catch (e) {} }
-
-    /* Prioritas 1: Custom Sheet */
     var sheetLogo = lookupCustomSheet(teamName);
     if (sheetLogo) { teamLogoCache[key] = { url: sheetLogo, source: LOGO_SOURCE_SHEET }; return teamLogoCache[key]; }
-
-    /* Prioritas 2: TheSportsDB API */
     var apiLogo = await fetchLogoFromAPI(teamName);
     if (apiLogo) { teamLogoCache[key] = { url: apiLogo, source: LOGO_SOURCE_API }; return teamLogoCache[key]; }
-
-    /* Tidak ketemu */
     teamLogoCache[key] = { url: null, source: LOGO_SOURCE_NONE };
     return teamLogoCache[key];
 }
