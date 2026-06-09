@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Generator Panel</title>
     <link rel="icon" type="image/x-icon" id="favicon" href="https://togelon.com/favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;600;700&family=Cinzel:wght@700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;600;700&family=Cinzel:wght@700;900&family=Poppins:wght@400;600;700&family=Libre+Franklin:wght@900&family=Noto+Emoji:wght@300..700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00E5FF; --primary-light: #6FF9FF; --primary-dark: #00B8D4;
@@ -35,6 +35,65 @@
         .container { max-width: 1800px; margin: 0 auto; padding: 20px; }
         .header { text-align:center; padding:30px 20px; margin-bottom:30px; background:linear-gradient(135deg,rgba(0,6,13,0.7),rgba(0,10,20,0.9)); border-radius:20px; border:3px solid var(--primary); animation:borderGlow 3s ease-in-out infinite; position:relative; }
         .header img.logo { max-width:300px; filter:drop-shadow(0 0 25px var(--primary)); position:relative; z-index:1; }
+
+        .logo-animated {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 4px;
+            font-family: 'Libre Franklin', sans-serif;
+            font-weight: 900;
+            line-height: 1cap;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 0 4px var(--primary), 0 0 8px rgba(0,229,255,0.3);
+        }
+        .logo-animated .soccer-wrapper { position: relative; }
+
+        @keyframes letter-bounce {
+            0% { transform: scaleX(1.2) scaleY(0.75); }
+            45% { transform: scaleX(1) scaleY(1); }
+        }
+        .logo-animated .letter-i {
+            display: inline-block;
+            will-change: transform;
+            animation: letter-bounce 0.35s ease both infinite alternate;
+            transform-origin: bottom center;
+        }
+
+        @keyframes bounce {
+            from { translate: -50% 100%; }
+            to { translate: -50% 0; }
+        }
+        @keyframes rotate {
+            from { rotate: 0deg; }
+            to { rotate: 360deg; }
+        }
+        .logo-animated .soccer {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            translate: -50% 0;
+            --size: 50px;
+            width: var(--size);
+            height: var(--size);
+            font-size: calc(var(--size) * 0.8);
+            margin-bottom: 25px;
+            will-change: transform;
+            animation: rotate 4s both linear infinite,
+                       bounce 0.35s ease-out both infinite alternate;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Noto Emoji', sans-serif;
+        }
+
+        .logo-animated.lg { font-size: 48px; gap: 3px; }
+        .logo-animated.lg .soccer { --size: 26px; margin-bottom: 12px; }
+
+        .logo-animated.md { font-size: 36px; gap: 2px; }
+        .logo-animated.md .soccer { --size: 20px; margin-bottom: 10px; }
+
         .header h1 { font-family:'Orbitron',sans-serif; font-size:42px; font-weight:900; color:var(--primary); margin:15px 0 10px; animation:neonPulse 3s ease-in-out infinite; letter-spacing:3px; position:relative; z-index:1; }
         .header p { font-size:16px; letter-spacing:1px; position:relative; z-index:1; }
 
@@ -50,7 +109,7 @@
         .site-card-new.active { border-color:var(--primary); box-shadow:0 0 35px var(--glow-alpha); background:rgba(0,4,10,0.95); }
         .site-card-new.active::after { opacity:1; height:5px; }
         .site-card-new:not(.active):hover { border-color:rgba(255,255,255,0.2); transform:translateY(-4px); }
-        .site-card-logo-wrap { width:80px; height:80px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; border-radius:50%; background:rgba(0,0,0,0.5); border:2px solid rgba(255,255,255,0.08); overflow:hidden; }
+        .site-card-logo-wrap { width:80px; height:80px; display:flex; align-items:center; justify-content:center; margin-bottom:10px; border-radius:12px; background:rgba(0,0,0,0.5); border:2px solid rgba(255,255,255,0.08); overflow:hidden; }
         .site-card-new.active .site-card-logo-wrap { border-color:var(--primary); box-shadow:0 0 20px var(--glow-alpha); animation:logoRing 2.5s ease-in-out infinite; }
         .site-card-logo-wrap img { width:60px; max-height:60px; object-fit:contain; filter:drop-shadow(0 0 8px var(--primary)); }
         .site-card-label { font-family:'Orbitron',sans-serif; font-size:clamp(10px,1.4vw,13px); font-weight:900; letter-spacing:2px; }
@@ -140,11 +199,9 @@
 
         .prev-team-side { flex:1; display:flex; align-items:center; gap:6px; min-width:0; }
         .prev-team-side.right { flex-direction:row-reverse; }
-        
-        /* PERBAIKAN LOGO */
-        .prev-team-logo { width:42px; height:42px; object-fit:contain; flex-shrink:0; border-radius:50%; padding:3px; background:rgba(0,0,0,0.4); border:2px solid var(--primary); box-shadow:0 0 8px var(--glow-alpha); animation:logoRing 2.5s ease-in-out infinite; transition:transform 0.3s; }
+        .prev-team-logo { width:42px; height:42px; object-fit:contain; flex-shrink:0; border-radius:6px; padding:3px; background:rgba(0,0,0,0.4); border:2px solid var(--primary); box-shadow:0 0 8px var(--glow-alpha); animation:logoRing 2.5s ease-in-out infinite; transition:transform 0.3s; }
         .prev-team-logo:hover { transform:scale(1.2); }
-        .prev-team-no-logo { width:42px; height:42px; flex-shrink:0; border-radius:50%; background:rgba(0,0,0,0.4); border:2px dashed rgba(0,229,255,0.3); display:flex; align-items:center; justify-content:center; font-size:8px; color:rgba(255,255,255,0.4); text-transform:uppercase; font-weight:700; }
+        .prev-team-no-logo { width:42px; height:42px; flex-shrink:0; border-radius:6px; background:rgba(0,0,0,0.4); border:2px dashed rgba(0,229,255,0.3); display:flex; align-items:center; justify-content:center; font-size:8px; color:rgba(255,255,255,0.4); text-transform:uppercase; font-weight:700; }
 
         .prev-team-name { font-size:clamp(8px,1.6vw,10px); font-weight:700; line-height:1.3; word-break:break-word; }
         .prev-team-side.right .prev-team-name { text-align:right; }
@@ -170,13 +227,21 @@
         .notification { position:fixed; top:30px; right:30px; background:linear-gradient(135deg,#00E5FF,#00B8D4); color:#000; padding:18px 30px; border-radius:12px; box-shadow:0 10px 30px rgba(0,229,255,0.4); display:none; z-index:10000; animation:slideIn 0.5s ease; font-weight:700; font-size:15px; }
 
         @media(max-width:1200px){ .main-layout{grid-template-columns:1fr;} .preview-sticky{position:relative;top:0;} .color-grid{grid-template-columns:1fr;} .site-cards-row{grid-template-columns:repeat(2,1fr);} }
-        @media(max-width:768px){ .header img.logo{max-width:180px;} .header h1{font-size:28px;} button{font-size:12px;padding:12px 20px;} .site-cards-row{grid-template-columns:repeat(2,1fr);gap:10px;} .site-card-logo-wrap{width:60px;height:60px;} .site-card-logo-wrap img{width:44px;max-height:44px;} }
+        @media(max-width:768px){ .header img.logo{max-width:180px;} .header h1{font-size:28px;} button{font-size:12px;padding:12px 20px;} .site-cards-row{grid-template-columns:repeat(2,1fr);gap:10px;} .site-card-logo-wrap{width:60px;height:60px;} .site-card-logo-wrap img{width:44px;max-height:44px;} .logo-animated.lg{font-size:36px;} .logo-animated.lg .soccer{--size:20px;margin-bottom:10px;} }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <img class="logo" id="headerLogo" src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON">
+        <img class="logo" id="headerLogo" src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON" style="display:none;">
+        <div class="logo-animated lg" id="headerLogoAnimated">
+            <span>TOGE</span>
+            <span class="soccer-wrapper">
+                <span class="letter-i">L</span>
+                <span class="soccer">⚽</span>
+            </span>
+            <span>ON</span>
+        </div>
         <h1 id="headerTitle">TOGELON GENERATOR</h1>
         <p id="headerSub">Generator Bola Team TogelOn</p>
     </div>
@@ -245,7 +310,15 @@ Atau input manual pakai | :
                     <h2>PREVIEW HASIL</h2>
                     <div class="preview-container" id="previewMainContainer">
                         <div class="preview-header">
-                            <img id="previewLogo" src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON">
+                            <img id="previewLogo" src="https://i.postimg.cc/Y2yDw0tc/image.png" alt="TOGELON" style="display:none;">
+                            <div class="logo-animated md" id="previewLogoAnimated">
+                                <span>TOGE</span>
+                                <span class="soccer-wrapper">
+                                    <span class="letter-i">L</span>
+                                    <span class="soccer">⚽</span>
+                                </span>
+                                <span>ON</span>
+                            </div>
                             <h3 id="previewSiteName">TOGELON</h3>
                             <div class="preview-date" id="previewDate">-</div>
                         </div>
@@ -273,26 +346,33 @@ var SITES = {
 };
 var currentSiteKey='togelon'; function getSite(){return SITES[currentSiteKey];}
 
-function switchSite(key){
-    if(!SITES[key]||key===currentSiteKey)return; currentSiteKey=key; var site=getSite();
-    document.getElementById('headerLogo').src=site.logo; document.getElementById('headerTitle').textContent=site.name+' GENERATOR'; document.getElementById('headerSub').textContent=site.sub;
-    document.getElementById('previewLogo').src=site.logo; document.getElementById('previewSiteName').textContent=site.name; document.getElementById('previewMarqueeText').textContent=site.marquee; document.getElementById('favicon').href=site.favicon;
-    document.body.style.background='linear-gradient(135deg,'+site.bodyOverlay+'),url(\''+site.background+'\')'; document.body.style.backgroundSize='cover'; document.body.style.backgroundPosition='center'; document.body.style.backgroundAttachment='fixed';
-    var vars=site.cssVars; Object.keys(vars).forEach(function(k){document.documentElement.style.setProperty(k,vars[k]);});
-    setColorValues(site.defaultColors.bg,site.defaultColors.txt,site.defaultColors.hd,site.defaultColors.mq); updatePreviewColors();
-    document.querySelectorAll('.site-card-new').forEach(function(card){card.classList.toggle('active',card.getAttribute('data-site')===key);});
-    reRenderIfHasData(); showNotification('Panel diubah ke '+site.name);
+function updateLogoDisplay(isTogelon){
+    var hImg=document.getElementById('headerLogo'),hAnim=document.getElementById('headerLogoAnimated');
+    var pImg=document.getElementById('previewLogo'),pAnim=document.getElementById('previewLogoAnimated');
+    if(isTogelon){hImg.style.display='none';hAnim.style.display='inline-flex';pImg.style.display='none';pAnim.style.display='inline-flex';}
+    else{hImg.style.display='';hAnim.style.display='none';pImg.style.display='';pAnim.style.display='none';}
 }
 
-var SHEET_CONFIG={USER_SHEET_ID:'1p5dosbNmvT2-V1gFrv_KTIzOnCb32qxNDqQ42ZlM24s',USER_TABS:[{gid:'0'}]}; var customSheetLogoDb={}; var customSheetCount=0; var sheetLoaded=false; var sheetLoadPromise=null;
+function switchSite(key){
+    if(!SITES[key]||key===currentSiteKey)return;currentSiteKey=key;var site=getSite();
+    document.getElementById('headerLogo').src=site.logo;document.getElementById('headerTitle').textContent=site.name+' GENERATOR';document.getElementById('headerSub').textContent=site.sub;
+    document.getElementById('previewLogo').src=site.logo;document.getElementById('previewSiteName').textContent=site.name;document.getElementById('previewMarqueeText').textContent=site.marquee;document.getElementById('favicon').href=site.favicon;
+    document.body.style.background='linear-gradient(135deg,'+site.bodyOverlay+'),url(\''+site.background+'\')';document.body.style.backgroundSize='cover';document.body.style.backgroundPosition='center';document.body.style.backgroundAttachment='fixed';
+    var vars=site.cssVars;Object.keys(vars).forEach(function(k){document.documentElement.style.setProperty(k,vars[k]);});
+    setColorValues(site.defaultColors.bg,site.defaultColors.txt,site.defaultColors.hd,site.defaultColors.mq);updatePreviewColors();
+    document.querySelectorAll('.site-card-new').forEach(function(card){card.classList.toggle('active',card.getAttribute('data-site')===key);});
+    updateLogoDisplay(key==='togelon');reRenderIfHasData();showNotification('Panel diubah ke '+site.name);
+}
+
+var SHEET_CONFIG={USER_SHEET_ID:'1p5dosbNmvT2-V1gFrv_KTIzOnCb32qxNDqQ42ZlM24s',USER_TABS:[{gid:'0'}]};var customSheetLogoDb={};var customSheetCount=0;var sheetLoaded=false;var sheetLoadPromise=null;
 
 function loadCustomSheet(gid){return new Promise(function(resolve){var cbName='gviz_custom_gid_'+gid;var url='https://docs.google.com/spreadsheets/d/'+SHEET_CONFIG.USER_SHEET_ID+'/gviz/tq?tqx=out:json;responseHandler:'+cbName+'&gid='+gid;var scriptId='gviz_script_'+cbName;var timeout=setTimeout(function(){cleanup();resolve(0);},25000);function cleanup(){clearTimeout(timeout);var s=document.getElementById(scriptId);if(s)s.parentNode.removeChild(s);delete window[cbName];}window[cbName]=function(json){var rows=(json&&json.table&&json.table.rows)?json.table.rows:[];var cols=(json&&json.table&&json.table.cols)?json.table.cols:[];var nameCol=-1,urlCol=-1;for(var ci=0;ci<cols.length;ci++){var label=(cols[ci].label||'').toLowerCase();if(nameCol===-1&&(label.includes('team')||label.includes('nama')||label.includes('name')||label.includes('club')||label.includes('tim')))nameCol=ci;if(urlCol===-1&&(label.includes('url')||label.includes('logo')||label.includes('link')||label.includes('image')||label.includes('badge')||label.includes('src')||label.includes('gambar')||label.includes('icon')))urlCol=ci;}if(nameCol===-1)nameCol=cols.length>2?1:0;if(urlCol===-1)urlCol=cols.length>2?2:1;rows.forEach(function(row){if(!row.c)return;var n=row.c[nameCol]&&row.c[nameCol].v?String(row.c[nameCol].v).trim():'';var u=row.c[urlCol]&&row.c[urlCol].v?String(row.c[urlCol].v).trim():'';if(!u){for(var alt=0;alt<row.c.length;alt++){if(alt===nameCol)continue;var altVal=row.c[alt]&&row.c[alt].v?String(row.c[alt].v).trim():'';if(altVal.startsWith('http')&&(altVal.includes('.png')||altVal.includes('.jpg')||altVal.includes('img')||altVal.includes('logo'))){u=altVal;break;}}}if(n&&u)customSheetLogoDb[n.toLowerCase()]=u;});cleanup();resolve(rows.length>0?1:0);};var script=document.createElement('script');script.id=scriptId;script.async=true;script.onerror=function(){cleanup();resolve(0);};script.src=url;document.head.appendChild(script);});}
 
-async function loadSheet(){if(sheetLoaded)return;var ok=false;try{for(var t=0;t<SHEET_CONFIG.USER_TABS.length;t++)await loadCustomSheet(SHEET_CONFIG.USER_TABS[t].gid);customSheetCount=Object.keys(customSheetLogoDb).length;ok=customSheetCount>0;}catch(e){ok=false;}var dot=document.getElementById('sheetDot'),txt=document.getElementById('sheetStatusText'),badge=document.getElementById('sheetBadge');if(ok){dot.className='dot ok';txt.textContent='Google Sheet Custom terhubung -- '+customSheetCount+' logo tim dimuat';badge.textContent=customSheetCount+' logo';badge.style.display='inline';badge.style.background='#00E676';}else{dot.className='dot fail';txt.textContent='Custom Sheet gagal dimuat -- menggunakan Auto-Fetch API';badge.textContent='0 logo';badge.style.display='inline';badge.style.background='#FF5252';}sheetLoaded=true;} sheetLoadPromise=loadSheet();
+async function loadSheet(){if(sheetLoaded)return;var ok=false;try{for(var t=0;t<SHEET_CONFIG.USER_TABS.length;t++)await loadCustomSheet(SHEET_CONFIG.USER_TABS[t].gid);customSheetCount=Object.keys(customSheetLogoDb).length;ok=customSheetCount>0;}catch(e){ok=false;}var dot=document.getElementById('sheetDot'),txt=document.getElementById('sheetStatusText'),badge=document.getElementById('sheetBadge');if(ok){dot.className='dot ok';txt.textContent='Google Sheet Custom terhubung -- '+customSheetCount+' logo tim dimuat';badge.textContent=customSheetCount+' logo';badge.style.display='inline';badge.style.background='#00E676';}else{dot.className='dot fail';txt.textContent='Custom Sheet gagal dimuat -- menggunakan Auto-Fetch API';badge.textContent='0 logo';badge.style.display='inline';badge.style.background='#FF5252';}sheetLoaded=true;}sheetLoadPromise=loadSheet();
 
-var teamLogoCache={}; var SHORT_NAMES={'manchester city':'man city','manchester united':'man united','atletico madrid':'atletico','inter milan':'inter','ac milan':'milan','as roma':'roma','tottenham hotspur':'tottenham','west ham united':'west ham','newcastle united':'newcastle','wolverhampton wanderers':'wolves','brighton & hove albion':'brighton','crystal palace':'c palace','borussia dortmund':'dortmund','paris saint-germain':'psg','paris saint germain':'psg','rb leipzig':'leipzig','bayer leverkusen':'leverkusen','real madrid':'real madrid','fc barcelona':'barcelona'};
+var teamLogoCache={};var SHORT_NAMES={'manchester city':'man city','manchester united':'man united','atletico madrid':'atletico','inter milan':'inter','ac milan':'milan','as roma':'roma','tottenham hotspur':'tottenham','west ham united':'west ham','newcastle united':'newcastle','wolverhampton wanderers':'wolves','brighton & hove albion':'brighton','crystal palace':'c palace','borussia dortmund':'dortmund','paris saint-germain':'psg','paris saint germain':'psg','rb leipzig':'leipzig','bayer leverkusen':'leverkusen','real madrid':'real madrid','fc barcelona':'barcelona'};
 
-function getShortName(n){return SHORT_NAMES[n.toLowerCase()]||null;} function cleanTeamNameForLogo(name){var c=name;c=c.replace(/\s*[\(\[]\s*[Ww]\s*[\)\]]/g,'');c=c.replace(/\s+U[-\s]?\d{2,}/gi,'');c=c.replace(/\s*[\(\[][^\)\]]{1,60}[\)\]]\s*$/g,'');return c.trim().replace(/\s{2,}/g,' ')||name;}
+function getShortName(n){return SHORT_NAMES[n.toLowerCase()]||null;}function cleanTeamNameForLogo(name){var c=name;c=c.replace(/\s*[\(\[]\s*[Ww]\s*[\)\]]/g,'');c=c.replace(/\s+U[-\s]?\d{2,}/gi,'');c=c.replace(/\s*[\(\[][^\)\]]{1,60}[\)\]]\s*$/g,'');return c.trim().replace(/\s{2,}/g,' ')||name;}
 
 function lookupCustomSheet(teamName){var key=teamName.toLowerCase().trim();if(customSheetLogoDb[key])return customSheetLogoDb[key];var cleanName=cleanTeamNameForLogo(teamName).toLowerCase().trim();if(cleanName!==key&&customSheetLogoDb[cleanName])return customSheetLogoDb[cleanName];var sn=getShortName(teamName);if(sn&&customSheetLogoDb[sn.toLowerCase()])return customSheetLogoDb[sn.toLowerCase()];return null;}
 
@@ -319,15 +399,59 @@ function buildLeagueDropdown(leagues){var wrap=document.getElementById('leagueFi
 function filterLeague(name){document.querySelectorAll('#previewTables .prev-league-block').forEach(function(w){w.style.display=(name==='all'||w.getAttribute('data-league')===name)?'':'none';});}
 function togglePredRow(btn){var row=btn.parentElement.nextElementSibling;var isOpen=row.classList.contains('show');row.classList.toggle('show');btn.classList.toggle('open');btn.querySelector('.chevron').textContent=isOpen?'\u25BC':'\u25B2';}
 
-// PERBAIKAN LOGO FALLBACK DI PREVIEW
 function renderPreview(leagues){var tablesDiv=document.getElementById('previewTables');var emptyDiv=document.getElementById('previewEmpty');if(!leagues.length){tablesDiv.innerHTML='';emptyDiv.style.display='block';document.getElementById('leagueFilterWrap').style.display='none';return;}emptyDiv.style.display='none';var c=getColors();var html='';leagues.forEach(function(league){html+='<div class="prev-league-block" data-league="'+escHtml(league.name)+'"><div class="prev-league-inner">';html+='<div class="prev-league-crown" style="border-bottom-color:'+c.bg+'66;"><div class="prev-crown-name" style="color:'+c.bg+';">'+escHtml(league.name)+'</div></div>';league.matches.forEach(function(m,mi){var cls=mi%2===0?'even':'odd';var l1=getTeamLogoUrl(m.team1);var l2=getTeamLogoUrl(m.team2);var noImg='<div class="prev-team-no-logo">NO IMG</div>';var logo1Html=l1?'<img class="prev-team-logo" src="'+l1+'" alt="'+escHtml(m.team1)+'"/>':noImg;var logo2Html=l2?'<img class="prev-team-logo" src="'+l2+'" alt="'+escHtml(m.team2)+'"/>':noImg;html+='<div class="prev-match-card '+cls+'">';html+='<div class="prev-team-side">'+logo1Html+'<span class="prev-team-name">'+escHtml(m.team1)+'</span></div>';html+='<div class="prev-score-center"><div class="prev-score-num" style="color:'+c.bg+';">'+m.score1+' : '+m.score2+'</div><div class="prev-match-dt">'+m.date+'<br/>'+m.time+'</div></div>';html+='<div class="prev-team-side right">'+logo2Html+'<span class="prev-team-name">'+escHtml(m.team2)+'</span></div>';html+='<div class="prev-pred-toggle"><div class="prev-pred-toggle-btn" onclick="togglePredRow(this)"><span>PREDIKSI</span> <span class="chevron">\u25BC</span></div></div>';html+='<div class="prev-pred-row">';html+='<div class="prev-pred-box" style="border-color:'+c.bg+';"><div class="prev-pred-label">HANDICAP</div><div class="prev-pred-value" style="color:'+c.bg+';">'+escHtml(m.pred.handicap)+'</div></div>';html+='<div class="prev-pred-box" style="border-color:'+c.bg+';"><div class="prev-pred-label">TOTAL</div><div class="prev-pred-value" style="color:'+c.bg+';">'+escHtml(m.pred.total)+'</div></div>';html+='<div class="prev-pred-box" style="border-color:'+c.bg+';"><div class="prev-pred-label">INDEX</div><div class="prev-pred-value" style="color:'+c.bg+';">'+escHtml(m.pred.index)+'</div></div>';html+='<div class="prev-pred-box" style="border-color:'+c.bg+';"><div class="prev-pred-label">SKOR TEPAT</div><div class="prev-pred-value" style="color:'+c.bg+';">'+escHtml(m.pred.correctScore)+'</div></div>';html+='</div></div>';});html+='</div></div>';});tablesDiv.innerHTML=html;buildLeagueDropdown(leagues);filterLeague('all');}
 
-// PERBAIKAN LOGO FALLBACK DI OUTPUT HTML
-function buildOutputHTML(leagues){var site=getSite();var autoDate=document.getElementById('autoDate').textContent;var c=getColors();var lighter=adjustColor(c.bg,30);var darker=adjustColor(c.bg,-20);var ob=site.outBg;var blocks='';var matchIdx=0;leagues.forEach(function(league){blocks+='<div class="league-block" data-league="'+escHtml(league.name)+'">\n<div class="league-inner">\n<div class="league-crown">\n<div class="crown-name">'+escHtml(league.name)+'</div>\n</div>\n';league.matches.forEach(function(m,mi){var cls=mi%2===0?'even':'odd';var logo1=getTeamLogoUrl(m.team1);var logo2=getTeamLogoUrl(m.team2);var noImg='<div class="team-logo" style="display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,0.4);background:rgba(0,0,0,0.3);">NO IMG</div>';var logo1Html=logo1?'<img class="team-logo" src="'+logo1+'" alt="'+escHtml(m.team1)+'"/>':noImg;var logo2Html=logo2?'<img class="team-logo" src="'+logo2+'" alt="'+escHtml(m.team2)+'"/>':noImg;var uid='pr'+matchIdx;blocks+='<div class="match-card '+cls+'">\n<div class="team-side left">\n'+logo1Html+'\n<span class="team-name">'+escHtml(m.team1)+'</span>\n</div>\n<div class="score-center">\n<div class="score-num">'+m.score1+' : '+m.score2+'</div>\n<div class="match-dt">'+m.date+'<br/>'+m.time+'</div>\n</div>\n<div class="team-side right">\n'+logo2Html+'\n<span class="team-name">'+escHtml(m.team2)+'</span>\n</div>\n';blocks+='<div class="pred-toggle"><div class="pred-toggle-btn" onclick="togglePred(\''+uid+'\',this)"><span>PREDIKSI</span> <span class="chevron">\u25BC</span></div></div>\n';blocks+='<div class="pred-row" id="'+uid+'">\n';blocks+='<div class="pred-box"><div class="pred-label">HANDICAP</div><div class="pred-value">'+escHtml(m.pred.handicap)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">TOTAL</div><div class="pred-value">'+escHtml(m.pred.total)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">INDEX</div><div class="pred-value">'+escHtml(m.pred.index)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">SKOR TEPAT</div><div class="pred-value">'+escHtml(m.pred.correctScore)+'</div></div>\n';blocks+='</div>\n</div>\n';matchIdx++;});blocks+='</div>\n</div>\n\n';});
+/* ============================================================
+   PERBAIKAN UTAMA: Logo output KECIL + glow MINIMAL = tajam
+   ============================================================ */
+function buildAnimatedLogoHtml(fontSize, soccerSize, soccerMargin){
+    return '<div style="text-align:center;padding:20px 16px 12px;">'
+        +'<div class="logo-animated" style="font-size:'+fontSize+'px;gap:'+Math.round(fontSize*0.06)+'px;">'
+        +'<span>TOGE</span>'
+        +'<span class="soccer-wrapper">'
+        +'<span class="letter-i">L</span>'
+        +'<span class="soccer" style="--size:'+soccerSize+'px;margin-bottom:'+soccerMargin+'px;">&#9917;</span>'
+        +'</span>'
+        +'<span>ON</span>'
+        +'</div>'
+        +'</div>';
+}
 
-return '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">\n<style>\n*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}\n:root{--g:'+c.bg+';--gl:'+lighter+';--g2:'+darker+';--gd:'+c.bg+'66;--gs:'+c.bg+'22;--cr:'+c.txt+';--bg:'+ob.dk+';--bg2:'+ob.dm+';--bg3:'+ob.dl+';}\nbody{background:linear-gradient(135deg,'+site.outputOverlay+'),url(\''+site.background+'\');background-size:cover;background-position:center;background-attachment:fixed;font-family:\'Poppins\',sans-serif;color:var(--cr);min-height:100vh;overflow-x:hidden;}\n@keyframes neonPulse{0%,100%{text-shadow:0 0 4px var(--g),0 0 10px var(--g),0 0 20px var(--g);opacity:1}50%{text-shadow:0 0 2px var(--g),0 0 5px var(--g);opacity:.85}}\n@keyframes colorCycle{0%{color:var(--g);text-shadow:0 0 8px var(--g)}33%{color:var(--gl);text-shadow:0 0 16px var(--gl)}66%{color:var(--g2);text-shadow:0 0 8px var(--g2)}100%{color:var(--g);text-shadow:0 0 8px var(--g)}}\n@keyframes borderGlow{0%,100%{box-shadow:0 0 8px var(--gd),0 0 16px var(--gs)}50%{box-shadow:0 0 18px var(--g),0 0 36px var(--gd),0 0 56px var(--gs)}}\n@keyframes logoRing{0%,100%{border-color:var(--g);box-shadow:0 0 6px var(--gs)}50%{border-color:var(--gl);box-shadow:0 0 14px var(--g),0 0 28px var(--gd)}}\n@keyframes shimmer{0%{left:-100%}100%{left:200%}}\n@keyframes btnGlow{0%,100%{box-shadow:0 0 4px var(--gs)}50%{box-shadow:0 0 14px var(--gd),0 0 28px var(--gs)}}\n@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}\n@keyframes fall{0%{top:-40px;transform:translateX(0) rotate(0deg);opacity:1}100%{top:110vh;transform:translateX(80px) rotate(360deg);opacity:.3}}\n.site-logo{text-align:center;padding:22px 16px 10px;}\n.site-logo img{width:65%;max-width:240px;filter:drop-shadow(0 0 22px var(--g));}\n.date-display{text-align:center;margin:14px auto;width:90%;padding:13px 16px;border:3px solid var(--g);border-radius:15px;background:linear-gradient(180deg,var(--bg2),var(--bg));font-family:\'Cinzel\',serif;font-size:clamp(13px,3.5vw,18px);font-weight:700;color:var(--g);letter-spacing:2px;box-shadow:0 0 20px var(--gd);word-break:break-word;animation:colorCycle 4s ease-in-out infinite;}\n.marquee-wrap{overflow:hidden;white-space:nowrap;width:90%;margin:0 auto 16px;border:3px solid var(--g);border-radius:15px;background:linear-gradient(135deg,var(--bg2),var(--bg),var(--bg2));padding:15px 0;box-shadow:0 0 20px var(--gd);animation:borderGlow 3s ease-in-out infinite;}\n.marquee-inner{display:inline-block;animation:marquee 38s linear infinite;padding-left:100%;font-size:clamp(11px,2.8vw,14px);font-weight:900;color:'+c.mq+';text-shadow:0 0 10px '+c.mq+'66;letter-spacing:1.5px;}\n.filter-wrap{width:90%;margin:0 auto 20px;}\n.filter-label{font-size:11px;color:#fff;opacity:.9;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:7px;}\n.select-box{position:relative;}\n.select-box::after{content:"\\25BC";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--g);font-size:11px;pointer-events:none;}\n.fselect{width:100%;padding:10px 38px 10px 14px;background:rgba(0,0,0,.85);border:2px solid var(--gd);border-radius:10px;color:#fff;font-family:\'Poppins\',sans-serif;font-size:13px;font-weight:700;appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;}\n.fselect:focus,.fselect:hover{border-color:var(--g);box-shadow:0 0 12px var(--gd);}\n.fselect option{background:var(--bg);color:#fff;}\n.league-block{width:90%;margin:0 auto 22px;border:3px solid var(--g);border-radius:15px;padding:5px;background:rgba(0,0,0,.5);animation:borderGlow 3s ease-in-out infinite;}\n.league-inner{border-radius:10px;overflow:hidden;border:1px solid var(--gd);}\n.league-crown{background:linear-gradient(180deg,var(--bg2),var(--bg));padding:8px 10px 6px;text-align:center;border-bottom:1px solid var(--gs);}\n.crown-name{font-family:\'Cinzel\',serif;font-size:clamp(9px,2.4vw,12px);font-weight:900;color:var(--g);letter-spacing:2px;text-transform:uppercase;margin-top:2px;animation:neonPulse 3s ease-in-out infinite;}\n.match-card{display:flex;flex-wrap:wrap;align-items:center;padding:10px 10px 6px;border-bottom:1px solid var(--bg3);transition:background .2s;cursor:default;}\n.match-card:last-child{border-bottom:none;}\n.match-card.even{background:linear-gradient(180deg,var(--bg3),var(--bg));}\n.match-card.odd{background:linear-gradient(180deg,var(--bg),var(--bg3));}\n.match-card:hover{background:linear-gradient(135deg,var(--g),var(--gl))!important;}\n.match-card:hover .team-name,.match-card:hover .score-num,.match-card:hover .match-dt{color:#000!important;text-shadow:none!important;animation:none!important;}\n.team-side{flex:1;display:flex;align-items:center;gap:7px;min-width:0;}\n.team-side.right{flex-direction:row-reverse;}\n.team-logo{width:44px;height:44px;object-fit:contain;flex-shrink:0;border-radius:50%;padding:3px;background:rgba(0,0,0,.4);border:2px solid var(--g);box-shadow:0 0 8px var(--gd);animation:logoRing 2.5s ease-in-out infinite;transition:transform .3s;}\n.team-logo:hover{transform:scale(1.2);}\n.team-name{font-size:clamp(8px,2vw,11px);font-weight:700;color:var(--cr);line-height:1.3;word-break:break-word;}\n.team-side.right .team-name{text-align:right;}\n.score-center{flex-shrink:0;width:80px;text-align:center;padding:0 4px;}\n.score-num{font-family:\'Cinzel\',serif;font-size:clamp(15px,4vw,20px);font-weight:900;color:var(--g);letter-spacing:3px;line-height:1;margin-bottom:4px;animation:colorCycle 3s ease-in-out infinite;}\n.match-dt{font-size:clamp(8px,1.8vw,10px);font-weight:700;color:rgba(255,255,255,.75);line-height:1.5;letter-spacing:.5px;}\n.pred-toggle{width:100%;display:flex;justify-content:center;padding:5px 0 2px;}\n.pred-toggle-btn{background:rgba(255,255,255,.05);border:1px solid var(--gd);border-radius:20px;padding:3px 18px;font-size:9px;font-weight:700;color:var(--g);letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:\'Poppins\',sans-serif;display:flex;align-items:center;gap:6px;animation:btnGlow 2.5s ease-in-out infinite;}\n.pred-toggle-btn:hover{background:rgba(255,255,255,.1);border-color:var(--g);}\n.pred-toggle-btn .chevron{display:inline-block;transition:transform .3s;font-size:10px;}\n.pred-toggle-btn.open .chevron{transform:rotate(180deg);}\n.pred-row{width:100%;display:none;padding:8px 2px 6px;gap:6px;justify-content:center;flex-wrap:wrap;}\n.pred-row.show{display:flex;}\n.pred-box{position:relative;flex:1;min-width:65px;max-width:140px;background:rgba(0,0,0,.92);border:2px solid var(--g);border-radius:10px;padding:7px 5px 6px;text-align:center;overflow:hidden;animation:borderGlow 2.5s ease-in-out infinite;transition:transform .3s;}\n.pred-box::after{content:\'\';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:shimmer 3s linear infinite;}\n.pred-box:hover{transform:translateY(-2px);box-shadow:0 0 18px var(--g);}\n.pred-label{font-size:clamp(6px,1.2vw,8px);font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}\n.pred-value{font-family:\'Cinzel\',serif;font-size:clamp(9px,1.8vw,12px);font-weight:900;color:var(--g);letter-spacing:.5px;line-height:1.2;animation:neonPulse 2s ease-in-out infinite;}\n.flake{position:fixed;top:-40px;z-index:9999;user-select:none;pointer-events:none;border-radius:50%;animation:fall linear forwards;}\n@media(min-width:600px){.crown-name{font-size:15px;}.team-name{font-size:13px;}.score-num{font-size:22px;}.match-dt{font-size:11px;}.score-center{width:100px;}.pred-box{max-width:160px;}}\n</style>\n\n<header class="site-logo">\n<img src="'+site.logo+'" alt="'+site.name+'"/>\n</header>\n<div class="date-display">'+autoDate+'</div>\n<div class="marquee-wrap">\n<div class="marquee-inner">'+site.marquee+'&nbsp;&nbsp;&nbsp;&nbsp;'+site.marquee+'</div>\n</div>\n\n<div class="filter-wrap">\n<div class="filter-label">Pilih Liga</div>\n<div class="select-box">\n<select class="fselect" id="leagueFilter" onchange="filterLeague(this.value)">\n<option value="all">Semua Liga</option>\n'+leagues.map(function(l){return'<option value="'+escHtml(l.name)+'">'+escHtml(l.name)+'</option>';}).join('\n')+'\n</select>\n</div>\n</div>\n\n'+blocks+'<script>\nfunction filterLeague(val){document.querySelectorAll(\'.league-block\').forEach(function(b){b.style.display=(val===\'all\'||b.dataset.league===val)?\'\':\'none\';});}\nfunction togglePred(id,btn){var row=document.getElementById(id);var isOpen=row.classList.contains(\'show\');row.classList.toggle(\'show\');btn.classList.toggle(\'open\');btn.querySelector(\'.chevron\').textContent=isOpen?\'\\u25BC\':\'\\u25B2\';}\nfunction spawnFlake(){var f=document.createElement(\'div\');f.classList.add(\'flake\');var size=Math.random()*8+4;f.style.width=size+\'px\';f.style.height=size+\'px\';f.style.left=(Math.random()*window.innerWidth)+\'px\';f.style.background=\'var(--g)\';f.style.boxShadow=\'0 0 6px var(--g), 0 0 12px var(--gd)\';f.style.animationDuration=(Math.random()*5+6)+\'s\';f.style.opacity=(Math.random()*0.5+0.3);document.body.appendChild(f);setTimeout(function(){f.remove();},12000);}\nsetInterval(spawnFlake,800);\n<\/script>\n';}
+function buildOutputHTML(leagues){var site=getSite();var autoDate=document.getElementById('autoDate').textContent;var c=getColors();var lighter=adjustColor(c.bg,30);var darker=adjustColor(c.bg,-20);var ob=site.outBg;var blocks='';var matchIdx=0;leagues.forEach(function(league){blocks+='<div class="league-block" data-league="'+escHtml(league.name)+'">\n<div class="league-inner">\n<div class="league-crown">\n<div class="crown-name">'+escHtml(league.name)+'</div>\n</div>\n';league.matches.forEach(function(m,mi){var cls=mi%2===0?'even':'odd';var logo1=getTeamLogoUrl(m.team1);var logo2=getTeamLogoUrl(m.team2);var noImg='<div class="team-logo" style="display:flex;align-items:center;justify-content:center;font-size:8px;color:rgba(255,255,255,0.4);background:rgba(0,0,0,0.3);border-radius:6px;">NO IMG</div>';var logo1Html=logo1?'<img class="team-logo" src="'+logo1+'" alt="'+escHtml(m.team1)+'"/>':noImg;var logo2Html=logo2?'<img class="team-logo" src="'+logo2+'" alt="'+escHtml(m.team2)+'"/>':noImg;var uid='pr'+matchIdx;blocks+='<div class="match-card '+cls+'">\n<div class="team-side left">\n'+logo1Html+'\n<span class="team-name">'+escHtml(m.team1)+'</span>\n</div>\n<div class="score-center">\n<div class="score-num">'+m.score1+' : '+m.score2+'</div>\n<div class="match-dt">'+m.date+'<br/>'+m.time+'</div>\n</div>\n<div class="team-side right">\n'+logo2Html+'\n<span class="team-name">'+escHtml(m.team2)+'</span>\n</div>\n';blocks+='<div class="pred-toggle"><div class="pred-toggle-btn" onclick="togglePred(\''+uid+'\',this)"><span>PREDIKSI</span> <span class="chevron">\u25BC</span></div></div>\n';blocks+='<div class="pred-row" id="'+uid+'">\n';blocks+='<div class="pred-box"><div class="pred-label">HANDICAP</div><div class="pred-value">'+escHtml(m.pred.handicap)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">TOTAL</div><div class="pred-value">'+escHtml(m.pred.total)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">INDEX</div><div class="pred-value">'+escHtml(m.pred.index)+'</div></div>\n';blocks+='<div class="pred-box"><div class="pred-label">SKOR TEPAT</div><div class="pred-value">'+escHtml(m.pred.correctScore)+'</div></div>\n';blocks+='</div>\n</div>\n';matchIdx++;});blocks+='</div>\n</div>\n\n';});
 
-var debounceTimer=null; document.getElementById('inputText').addEventListener('input',function(){clearTimeout(debounceTimer);debounceTimer=setTimeout(function(){handleInput();},600);});
+/* KECIL + GLOW MINIMAL = TAJAM dan TERBACA */
+var animatedLogoCss='/* Animated TOGELON Logo */\n'
++'.logo-animated{display:flex;align-items:flex-end;gap:4px;font-family:"Libre Franklin",sans-serif;font-weight:900;line-height:1cap;color:#fff;justify-content:center;'
++'text-shadow:0 0 3px var(--g),0 0 6px var(--gs);'
++'filter:none;}\n'
++'.logo-animated .soccer-wrapper{position:relative;}\n'
++'@keyframes letter-bounce{0%{transform:scaleX(1.2) scaleY(0.75)}45%{transform:scaleX(1) scaleY(1)}}\n'
++'.logo-animated .letter-i{display:inline-block;will-change:transform;animation:letter-bounce 0.35s ease both infinite alternate;transform-origin:bottom center;}\n'
++'@keyframes soccerBounce{from{translate:-50% 100%}to{translate:-50% 0}}\n'
++'@keyframes soccerRotate{from{rotate:0deg}to{rotate:360deg}}\n'
++'.logo-animated .soccer{position:absolute;bottom:100%;left:50%;translate:-50% 0;--size:50px;width:var(--size);height:var(--size);font-size:calc(var(--size)*0.8);margin-bottom:25px;will-change:transform;animation:soccerRotate 4s both linear infinite,soccerBounce 0.35s ease-out both infinite alternate;display:flex;justify-content:center;align-items:center;font-family:"Noto Emoji",sans-serif;'
++'filter:none;}\n';
+
+var outputHeaderHtml;
+if(currentSiteKey==='togelon'){
+    /* font-size 48px, bola 26px — KECIL dan TAJAM */
+    outputHeaderHtml=buildAnimatedLogoHtml(48,26,12)+'\n';
+}else{
+    outputHeaderHtml='<header class="site-logo">\n<img src="'+site.logo+'" alt="'+site.name+'"/>\n</header>\n';
+}
+
+var outputFontImport='https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@400;600;700';
+if(currentSiteKey==='togelon'){
+    outputFontImport+='&family=Libre+Franklin:wght@900&family=Noto+Emoji:wght@300..700';
+}
+
+return '<link href="'+outputFontImport+'&display=swap" rel="stylesheet">\n<style>\n*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}\n:root{--g:'+c.bg+';--gl:'+lighter+';--g2:'+darker+';--gd:'+c.bg+'66;--gs:'+c.bg+'22;--cr:'+c.txt+';--bg:'+ob.dk+';--bg2:'+ob.dm+';--bg3:'+ob.dl+';}\nbody{background:linear-gradient(135deg,'+site.outputOverlay+'),url(\''+site.background+'\');background-size:cover;background-position:center;background-attachment:fixed;font-family:\'Poppins\',sans-serif;color:var(--cr);min-height:100vh;overflow-x:hidden;}\n@keyframes neonPulse{0%,100%{text-shadow:0 0 4px var(--g),0 0 10px var(--g),0 0 20px var(--g);opacity:1}50%{text-shadow:0 0 2px var(--g),0 0 5px var(--g);opacity:.85}}\n@keyframes colorCycle{0%{color:var(--g);text-shadow:0 0 8px var(--g)}33%{color:var(--gl);text-shadow:0 0 16px var(--gl)}66%{color:var(--g2);text-shadow:0 0 8px var(--g2)}100%{color:var(--g);text-shadow:0 0 8px var(--g)}}\n@keyframes borderGlow{0%,100%{box-shadow:0 0 8px var(--gd),0 0 16px var(--gs)}50%{box-shadow:0 0 18px var(--g),0 0 36px var(--gd),0 0 56px var(--gs)}}\n@keyframes logoRing{0%,100%{border-color:var(--g);box-shadow:0 0 6px var(--gs)}50%{border-color:var(--gl);box-shadow:0 0 14px var(--g),0 0 28px var(--gd)}}\n@keyframes shimmer{0%{left:-100%}100%{left:200%}}\n@keyframes btnGlow{0%,100%{box-shadow:0 0 4px var(--gs)}50%{box-shadow:0 0 14px var(--gd),0 0 28px var(--gs)}}\n@keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}\n@keyframes fall{0%{top:-40px;transform:translateX(0) rotate(0deg);opacity:1}100%{top:110vh;transform:translateX(80px) rotate(360deg);opacity:.3}}\n'
++(currentSiteKey==='togelon'?animatedLogoCss:'')
++'.site-logo{text-align:center;padding:22px 16px 10px;}\n.site-logo img{width:65%;max-width:240px;filter:drop-shadow(0 0 22px var(--g));}\n.date-display{text-align:center;margin:14px auto;width:90%;padding:13px 16px;border:3px solid var(--g);border-radius:15px;background:linear-gradient(180deg,var(--bg2),var(--bg));font-family:\'Cinzel\',serif;font-size:clamp(13px,3.5vw,18px);font-weight:700;color:var(--g);letter-spacing:2px;box-shadow:0 0 20px var(--gd);word-break:break-word;animation:colorCycle 4s ease-in-out infinite;}\n.marquee-wrap{overflow:hidden;white-space:nowrap;width:90%;margin:0 auto 16px;border:3px solid var(--g);border-radius:15px;background:linear-gradient(135deg,var(--bg2),var(--bg),var(--bg2));padding:15px 0;box-shadow:0 0 20px var(--gd);animation:borderGlow 3s ease-in-out infinite;}\n.marquee-inner{display:inline-block;animation:marquee 38s linear infinite;padding-left:100%;font-size:clamp(11px,2.8vw,14px);font-weight:900;color:'+c.mq+';text-shadow:0 0 10px '+c.mq+'66;letter-spacing:1.5px;}\n.filter-wrap{width:90%;margin:0 auto 20px;}\n.filter-label{font-size:11px;color:#fff;opacity:.9;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:7px;}\n.select-box{position:relative;}\n.select-box::after{content:"\\25BC";position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--g);font-size:11px;pointer-events:none;}\n.fselect{width:100%;padding:10px 38px 10px 14px;background:rgba(0,0,0,.85);border:2px solid var(--gd);border-radius:10px;color:#fff;font-family:\'Poppins\',sans-serif;font-size:13px;font-weight:700;appearance:none;-webkit-appearance:none;outline:none;cursor:pointer;}\n.fselect:focus,.fselect:hover{border-color:var(--g);box-shadow:0 0 12px var(--gd);}\n.fselect option{background:var(--bg);color:#fff;}\n.league-block{width:90%;margin:0 auto 22px;border:3px solid var(--g);border-radius:15px;padding:5px;background:rgba(0,0,0,.5);animation:borderGlow 3s ease-in-out infinite;}\n.league-inner{border-radius:10px;overflow:hidden;border:1px solid var(--gd);}\n.league-crown{background:linear-gradient(180deg,var(--bg2),var(--bg));padding:8px 10px 6px;text-align:center;border-bottom:1px solid var(--gs);}\n.crown-name{font-family:\'Cinzel\',serif;font-size:clamp(9px,2.4vw,12px);font-weight:900;color:var(--g);letter-spacing:2px;text-transform:uppercase;margin-top:2px;animation:neonPulse 3s ease-in-out infinite;}\n.match-card{display:flex;flex-wrap:wrap;align-items:center;padding:10px 10px 6px;border-bottom:1px solid var(--bg3);transition:background .2s;cursor:default;}\n.match-card:last-child{border-bottom:none;}\n.match-card.even{background:linear-gradient(180deg,var(--bg3),var(--bg));}\n.match-card.odd{background:linear-gradient(180deg,var(--bg),var(--bg3));}\n.match-card:hover{background:linear-gradient(135deg,var(--g),var(--gl))!important;}\n.match-card:hover .team-name,.match-card:hover .score-num,.match-card:hover .match-dt{color:#000!important;text-shadow:none!important;animation:none!important;}\n.team-side{flex:1;display:flex;align-items:center;gap:7px;min-width:0;}\n.team-side.right{flex-direction:row-reverse;}\n.team-logo{width:44px;height:44px;object-fit:contain;flex-shrink:0;border-radius:6px;padding:3px;background:rgba(0,0,0,.4);border:2px solid var(--g);box-shadow:0 0 8px var(--gd);animation:logoRing 2.5s ease-in-out infinite;transition:transform .3s;}\n.team-logo:hover{transform:scale(1.2);}\n.team-name{font-size:clamp(8px,2vw,11px);font-weight:700;color:var(--cr);line-height:1.3;word-break:break-word;}\n.team-side.right .team-name{text-align:right;}\n.score-center{flex-shrink:0;width:80px;text-align:center;padding:0 4px;}\n.score-num{font-family:\'Cinzel\',serif;font-size:clamp(15px,4vw,20px);font-weight:900;color:var(--g);letter-spacing:3px;line-height:1;margin-bottom:4px;animation:colorCycle 3s ease-in-out infinite;}\n.match-dt{font-size:clamp(8px,1.8vw,10px);font-weight:700;color:rgba(255,255,255,.75);line-height:1.5;letter-spacing:.5px;}\n.pred-toggle{width:100%;display:flex;justify-content:center;padding:5px 0 2px;}\n.pred-toggle-btn{background:rgba(255,255,255,.05);border:1px solid var(--gd);border-radius:20px;padding:3px 18px;font-size:9px;font-weight:700;color:var(--g);letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;font-family:\'Poppins\',sans-serif;display:flex;align-items:center;gap:6px;animation:btnGlow 2.5s ease-in-out infinite;}\n.pred-toggle-btn:hover{background:rgba(255,255,255,.1);border-color:var(--g);}\n.pred-toggle-btn .chevron{display:inline-block;transition:transform .3s;font-size:10px;}\n.pred-toggle-btn.open .chevron{transform:rotate(180deg);}\n.pred-row{width:100%;display:none;padding:8px 2px 6px;gap:6px;justify-content:center;flex-wrap:wrap;}\n.pred-row.show{display:flex;}\n.pred-box{position:relative;flex:1;min-width:65px;max-width:140px;background:rgba(0,0,0,.92);border:2px solid var(--g);border-radius:10px;padding:7px 5px 6px;text-align:center;overflow:hidden;animation:borderGlow 2.5s ease-in-out infinite;transition:transform .3s;}\n.pred-box::after{content:\'\';position:absolute;top:0;left:-100%;width:50%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.06),transparent);animation:shimmer 3s linear infinite;}\n.pred-box:hover{transform:translateY(-2px);box-shadow:0 0 18px var(--g);}\n.pred-label{font-size:clamp(6px,1.2vw,8px);font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}\n.pred-value{font-family:\'Cinzel\',serif;font-size:clamp(9px,1.8vw,12px);font-weight:900;color:var(--g);letter-spacing:.5px;line-height:1.2;animation:neonPulse 2s ease-in-out infinite;}\n.flake{position:fixed;top:-40px;z-index:9999;user-select:none;pointer-events:none;border-radius:50%;animation:fall linear forwards;}\n@media(min-width:600px){.crown-name{font-size:15px;}.team-name{font-size:13px;}.score-num{font-size:22px;}.match-dt{font-size:11px;}.score-center{width:100px;}.pred-box{max-width:160px;}}\n</style>\n\n'
++outputHeaderHtml
++'<div class="date-display">'+autoDate+'</div>\n<div class="marquee-wrap">\n<div class="marquee-inner">'+site.marquee+'&nbsp;&nbsp;&nbsp;&nbsp;'+site.marquee+'</div>\n</div>\n\n<div class="filter-wrap">\n<div class="filter-label">Pilih Liga</div>\n<div class="select-box">\n<select class="fselect" id="leagueFilter" onchange="filterLeague(this.value)">\n<option value="all">Semua Liga</option>\n'+leagues.map(function(l){return'<option value="'+escHtml(l.name)+'">'+escHtml(l.name)+'</option>';}).join('\n')+'\n</select>\n</div>\n</div>\n\n'+blocks+'<script>\nfunction filterLeague(val){document.querySelectorAll(\'.league-block\').forEach(function(b){b.style.display=(val===\'all\'||b.dataset.league===val)?\'\':\'none\';});}\nfunction togglePred(id,btn){var row=document.getElementById(id);var isOpen=row.classList.contains(\'show\');row.classList.toggle(\'show\');btn.classList.toggle(\'open\');btn.querySelector(\'.chevron\').textContent=isOpen?\'\\u25BC\':\'\\u25B2\';}\nfunction spawnFlake(){var f=document.createElement(\'div\');f.classList.add(\'flake\');var size=Math.random()*8+4;f.style.width=size+\'px\';f.style.height=size+\'px\';f.style.left=(Math.random()*window.innerWidth)+\'px\';f.style.background=\'var(--g)\';f.style.boxShadow=\'0 0 6px var(--g), 0 0 12px var(--gd)\';f.style.animationDuration=(Math.random()*5+6)+\'s\';f.style.opacity=(Math.random()*0.5+0.3);document.body.appendChild(f);setTimeout(function(){f.remove();},12000);}\nsetInterval(spawnFlake,800);\n<\/script>\n';}
+
+var debounceTimer=null;document.getElementById('inputText').addEventListener('input',function(){clearTimeout(debounceTimer);debounceTimer=setTimeout(function(){handleInput();},600);});
 
 async function handleInput(){var input=document.getElementById('inputText').value.trim();if(!input){document.getElementById('outputCode').textContent='Script HTML lengkap akan muncul di sini secara otomatis...';document.getElementById('previewTables').innerHTML='';document.getElementById('previewEmpty').style.display='block';document.getElementById('leagueFilterWrap').style.display='none';['totalLeagues','totalMatches','totalLogos','totalNoLogo'].forEach(function(id){document.getElementById(id).textContent='0';});document.getElementById('fetchIndicator').classList.remove('active');return;}var leagues=parseAll(input);if(!leagues.length)return;var allTeams=getAllTeams(leagues);var totalM=leagues.reduce(function(a,l){return a+l.matches.length;},0);document.getElementById('totalLeagues').textContent=leagues.length;document.getElementById('totalMatches').textContent=totalM;document.getElementById('fetchIndicator').classList.add('active');document.getElementById('fetchStatus').textContent='Mencari logo (Sheet + API)...';await Promise.all(allTeams.map(function(name){return fetchTeamLogo(name);}));document.getElementById('fetchIndicator').classList.remove('active');var found=allTeams.filter(function(n){var c=teamLogoCache[n.toLowerCase().trim()];return c&&c.url;}).length;var noLogo=allTeams.length-found;document.getElementById('totalLogos').textContent=found;document.getElementById('totalNoLogo').textContent=noLogo;renderPreview(leagues);document.getElementById('outputCode').textContent=buildOutputHTML(leagues);if(found===allTeams.length)showNotification('Semua '+found+' logo tim ditemukan!');else if(found>0)showNotification('Logo ditemukan: '+found+'/'+allTeams.length+' -- '+noLogo+' tim tanpa logo');else showNotification('Tidak ada logo ditemukan');}
 
@@ -349,9 +473,8 @@ function clearInput(){document.getElementById('inputText').value='';document.get
 
 function showNotification(msg){var n=document.getElementById('notification');var site=getSite();n.textContent=msg;n.style.background='linear-gradient(135deg,'+site.defaultColors.mq+','+site.defaultColors.bg+')';n.style.color='#000';n.style.display='block';n.style.animation='none';void n.offsetWidth;n.style.animation='slideIn 0.5s ease';setTimeout(function(){n.style.display='none';},3500);}
 
-window.addEventListener('DOMContentLoaded',function(){generateAutoDate();initColorPickers();updatePreviewColors();});
+window.addEventListener('DOMContentLoaded',function(){generateAutoDate();initColorPickers();updatePreviewColors();updateLogoDisplay(true);});
 
-/* ===== SCRIPT PENGAMAN AMAN ===== */
 (function(){
     document.addEventListener('contextmenu',function(e){e.preventDefault();});
     document.addEventListener('keydown',function(e){
@@ -363,3 +486,21 @@ window.addEventListener('DOMContentLoaded',function(){generateAutoDate();initCol
 </script>
 </body>
 </html>
+<script>
+document.addEventListener('contextmenu', e => e.preventDefault());
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'F12') e.preventDefault();
+    if (e.ctrlKey && e.shiftKey && ['I','J','C'].includes(e.key.toUpperCase())) e.preventDefault();
+    if (e.ctrlKey && e.key.toUpperCase() === 'U') e.preventDefault();
+});
+
+setInterval(() => {
+    const before = new Date();
+    debugger;
+    const after = new Date();
+    if (after - before > 100) {
+        document.body.innerHTML = '<h1 style="text-align:center;margin-top:50px;">Akses ditolak</h1>';
+    }
+}, 1000);
+</script>
